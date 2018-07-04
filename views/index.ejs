@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Puppeteer Screenshot</title>
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+
+    <div class="wrapper">
+
+      <div class="section">
+        <form @submit.prevent="startCrawling">
+          <input
+            required
+            type="text"
+            placeholder="Type a URL what your want to crawl"
+            class="form-control s-2"
+            v-model="url"
+            :disabled="!isActiveUrlField"
+          />
+        </form>
+      </div>
+
+      <div :hidden="!isMapReady">
+        <ul class="section settings list-unstyled">
+          <li class="settings-item">
+            Mobile:
+            <label>
+              <input
+                type="checkbox"
+                v-model="settings.screens"
+                value='{ "name": "mobile-portrait", "resolution": { "width": 320, "height": 480 } }'
+              />
+              Portrait (320x480)
+            </label>
+            <b class="spacer-1"></b>
+            <label>
+              <input
+                type="checkbox"
+                value='{ "name": "mobile-landscape", "resolution": { "width": 480, "height": 320 } }'
+                v-model="settings.screens"
+              />
+              Landscape (480x320)
+            </label>
+          </li>
+          <li class="settings-item">
+            Tablet:
+            <label>
+              <input
+                type="checkbox"
+                value='{ "name": "tablet-portrait", "resolution": { "width": 768, "height": 1024 } }'
+                v-model="settings.screens"
+              />
+              Portrait (768x1024)
+            </label>
+            <b class="spacer-1"></b>
+            <label>
+              <input
+                type="checkbox"
+                value='{ "name": "tablet-landscape", "resolution": { "width": 1024, "height": 768 } }'
+                v-model="settings.screens"
+              />
+              Landscape (1024x768)
+            </label>
+          </li>
+          <li class="settings-item">
+            Desktop:
+            <label>
+              <input
+                type="checkbox"
+                value='{ "name": "medium", "resolution": { "width": 1366, "height": 768 } }'
+                v-model="settings.screens"
+              />
+              Medium (1366x768)
+            </label>
+            <b class="spacer-1"></b>
+            <label>
+              <input
+                type="checkbox"
+                value='{ "name": "wide", "resolution": { "width": 1600, "height": 900 } }'
+                v-model="settings.screens"
+              />
+              Wide (1600x900)
+            </label>
+          </li>
+          <li class="settings-item" hidden>
+            Custom:
+            <input
+              disabled
+              type="text"
+              placeholder="1280x1024, 1920x1080"
+              class="form-control s-1"
+              style="max-width: 200px;"
+            />
+            (currently disabled)
+          </li>
+          <li class="settings-item">
+            Timeout:
+            <input
+              type="number"
+              class="form-control s-1"
+              v-model="settings.timeout"
+              step="100"
+              min="0"
+              style="max-width: 80px;"
+            />
+            ms
+          </li>
+          <li class="settings-item">
+            <a
+              class="link"
+              target="_blank"
+              href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options">
+              Wait until</a>:
+            <select v-model="settings.waitUntil">
+              <option>load</option>
+              <option>domcontentloaded</option>
+              <option>networkidle0</option>
+              <option>networkidle2</option>
+            </select>
+          </li>
+          <li class="settings-item">
+            Lazy mode:
+            <input type="checkbox" v-model="settings.lazyload">&nbsp;
+            <span style="font-size: 12px;">(if your site using lazy load images)</span>
+          </li>
+        </ul>
+
+        <div class="section">
+          <ul class="list-unstyled">
+            <li style="margin-bottom: 10px;">
+              <textarea
+                @keyup="getAddedPages"
+                rows="4"
+                v-model="pagesAdded"
+                placeholder="/arcticles/design-system&#10;/about-us&#10;/one-more-page"
+                class="form-control s-1"></textarea>
+              <div style="font-size: 12px;">Add pages (new line as a separator)</div>
+            </li>
+            <li style="margin-bottom: 5px;">
+              <label>
+                <input type="checkbox" v-model="selectAllPages">
+                <strong>Select all</strong>
+              </label>
+            </li>
+            <li v-for="page in pages.crawled" style="margin-bottom: 5px;">
+              <label>
+                <input type="checkbox" v-model="pages.selected" :value="page">
+                {{ truncateOrigin(page) }}
+                <span style="color: red;" v-if="page === isNewPage(page)">new</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section text-center">
+          <button
+            @click="startShotsGen"
+            class="btn-primary"
+            :disabled="pages.selected.length === 0 && pages.added.length === 0">
+            Take shots
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="loader-wrap" :hidden="!isActiveLoader">
+      <div class="loader"></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.0/vue-resource.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

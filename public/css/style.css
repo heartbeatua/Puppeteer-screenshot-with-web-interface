@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 16px/1.45 "Lucida Grande", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+input[type="checkbox"] {
+  position: relative;
+  top: -2px; }
+
+a {
+  color: #408aec; }
+
+.list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.text-center {
+  text-align: center; }
+
+.spacer-1 {
+  display: inline-block;
+  margin: 0 3px; }
+
+button,
+textarea,
+input {
+  font: inherit;
+  color: inherit;
+  margin: 0; }
+
+textarea {
+  resize: vertical; }
+
+.form-control {
+  width: 100%;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  border-radius: 3px; }
+  .form-control.s-1 {
+    padding: 3px 6px; }
+  .form-control.s-2 {
+    height: 42px;
+    padding: 0 15px; }
+  .form-control[disabled] {
+    background: #f8f8f8;
+    cursor: not-allowed; }
+
+.btn-primary {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px 15px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  transition: 0.05s ease;
+  user-select: none;
+  border-radius: 3px; }
+  .wide.btn-primary {
+    width: 100%; }
+  .btn-primary[disabled] {
+    cursor: not-allowed;
+    opacity: 0.65; }
+
+.btn-primary {
+  background: #fff;
+  border-color: #191919;
+  color: #191919; }
+  .btn-primary:hover:enabled, .btn-primary:active:enabled {
+    color: #fff;
+    background: #191919;
+    border-color: #191919; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+.loader {
+  border: 3px solid #f8f8f8;
+  border-top: 3px solid #191919;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; }
+  .loader-wrap {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.65);
+    align-items: center;
+    justify-content: center;
+    cursor: progress; }
+    .loader-wrap:not([hidden]) {
+      display: flex; }
+
+.wrapper {
+  width: 800px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px; }
+
+.section {
+  margin: 40px 0; }
+
+.settings-item {
+  margin: 12px 0; }
+
+.settings.is-disabled {
+  opacity: 0.6;
+  pointer-events: none; }
+
+/*# sourceMappingURL=style.css.map */
